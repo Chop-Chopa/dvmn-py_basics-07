@@ -4,12 +4,6 @@ import os
 import ptbot
 
 
-load_dotenv()
-
-TG_TOKEN = os.getenv('TELEGRAM_TOKEN')
-TG_CHAT_ID = os.getenv('TG_CHAT_ID')
-
-
 def reply(chat_id, text):
     secs_left = parse(text)
     message_id = bot.send_message(chat_id, "Осталось {} секунд!".format(secs_left))
@@ -35,8 +29,13 @@ def massage(chat_id):
 
 
 def main():
-    global bot
-    bot = ptbot.Bot(TG_TOKEN)
+    global bot, telegram_token, telegram_chat_id
+
+    load_dotenv()
+    telegram_token = os.getenv('TELEGRAM_TOKEN')
+    telegram_chat_id = os.getenv('TG_CHAT_ID')
+    
+    bot = ptbot.Bot(telegram_token)
     bot.reply_on_message(reply)
     bot.run_bot()
 
